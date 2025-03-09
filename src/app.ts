@@ -2,6 +2,7 @@ import express, { Application, Request, Response } from 'express';
 import cors from 'cors';
 import { StatusCodes } from 'http-status-codes';
 import userRouter from './app/modules/user/user.route';
+import { globalErrorHandler } from './middlewares/globalErrorHandler';
 
 const app: Application = express();
 
@@ -32,7 +33,7 @@ app.get('/', (req: Request, res: Response) => {
 });
 
 // Global Error Handler
-// app.use(globalErrorHandler);
+app.use(globalErrorHandler);
 
 // not found route
 app.use('*', (req: Request, res: Response) => {
