@@ -1,6 +1,7 @@
 import express, { Application, Request, Response } from 'express';
 import cors from 'cors';
 import { StatusCodes } from 'http-status-codes';
+import userRouter from './app/modules/user/user.route';
 
 const app: Application = express();
 
@@ -14,7 +15,7 @@ app.use(cors({ origin: 'http://localhost:5173', credentials: true }));
 // app.use("/api/auth", authRouter);
 
 // User
-// app.use("/api/users", userRouter);
+app.use('/api/users', userRouter);
 
 // Products
 // app.use("/api/products", productRouter);
