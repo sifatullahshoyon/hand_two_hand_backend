@@ -4,6 +4,7 @@ import { StatusCodes } from 'http-status-codes';
 import userRouter from './app/modules/user/user.route';
 import { globalErrorHandler } from './middlewares/globalErrorHandler';
 import authRouter from './app/modules/auth/auth.route';
+import listingRouter from './app/modules/listings/listings.route';
 
 const app: Application = express();
 
@@ -18,6 +19,9 @@ app.use('/api/auth', authRouter);
 
 // User
 app.use('/api/users', userRouter);
+
+// Listings
+app.use('/api/listings', listingRouter);
 
 // Products
 // app.use("/api/products", productRouter);
