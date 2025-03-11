@@ -6,6 +6,7 @@ import { globalErrorHandler } from './middlewares/globalErrorHandler';
 import authRouter from './app/modules/auth/auth.route';
 import listingRouter from './app/modules/listings/listings.route';
 import productRouter from './app/modules/items/items.route';
+import transactionRouter from './app/modules/transactions/transactions.route';
 
 const app: Application = express();
 
@@ -27,8 +28,8 @@ app.use('/api/listings', listingRouter);
 // Items or Products
 app.use('/api/items', productRouter);
 
-// Order
-// app.use("/api/orders", orderRouter);
+// transactions
+app.use('/api/transactions', transactionRouter);
 
 // ========================== Application Routes End ===================
 app.get('/', (req: Request, res: Response) => {

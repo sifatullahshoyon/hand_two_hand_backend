@@ -1,8 +1,8 @@
-import mongoose from 'mongoose';
+import { Types } from 'mongoose';
 
 export interface ITransaction {
-  buyerID: mongoose.Schema.Types.ObjectId;
-  sellerID: mongoose.Schema.Types.ObjectId;
-  itemID: mongoose.Schema.Types.ObjectId;
+  buyerID: Types.ObjectId;
+  sellerID: Types.ObjectId;
+  itemID: Types.ObjectId;
   status: 'pending' | 'completed';
 }

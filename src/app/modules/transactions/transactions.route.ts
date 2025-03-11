@@ -1,11 +1,14 @@
 import { Router } from 'express';
 import { transactionController } from './transaction.controller';
+import validateRequest from '../../../middlewares/validateRequest';
+import { transactionSchema } from './transaction.validation';
 
 const transactionRouter = Router();
 
 // Create a new transaction
 transactionRouter.post(
-  '/transactions',
+  '/',
+  validateRequest(transactionSchema),
   transactionController.createTransaction,
 );
 
@@ -19,9 +22,6 @@ transactionRouter.get(
 transactionRouter.get('/sales/:userId', transactionController.getSalesHistory);
 
 // Update transaction status
-transactionRouter.put(
-  '/transactions/:id',
-  transactionController.updateTransactionStatus,
-);
+transactionRouter.put('/:id', transactionController.updateTransactionStatus);
 
 export default transactionRouter;

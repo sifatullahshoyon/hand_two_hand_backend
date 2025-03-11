@@ -1,3 +1,4 @@
+import mongoose from 'mongoose';
 import { ITransaction } from './transaction.interface';
 import TransactionModel from './transaction.model';
 
@@ -5,20 +6,28 @@ import TransactionModel from './transaction.model';
 const createTransactionIntoDb = async (
   payload: ITransaction,
 ): Promise<ITransaction> => {
-  const result = await TransactionModel.create(payload);
-  return result;
+  const transactionData = {
+    ...payload,
+    buyerID: new mongoose.Types.ObjectId(payload.buyerID),
+    sellerID: new mongoose.Types.ObjectId(payload.sellerID),
+    itemID: new mongoose.Types.ObjectId(payload.itemID),
+  };
+
+  return await TransactionModel.create(transactionData);
 };
 
 // Get all purchases for a user
 const getPurchasesFromDb = async (userId: string) => {
-  const result = await TransactionModel.find({ buyerID: userId });
-  return result;
+  return await TransactionModel.find({
+    buyerID: new mongoose.Types.ObjectId(userId),
+  });
 };
 
 // Get all sales for a user
 const getSalesFromDb = async (userId: string) => {
-  const result = await TransactionModel.find({ sellerID: userId });
-  return result;
+  return await TransactionModel.find({
+    sellerID: new mongoose.Types.ObjectId(userId),
+  });
 };
 
 // Update transaction status
@@ -26,12 +35,11 @@ const updateTransactionStatusInDb = async (
   id: string,
   status: 'pending' | 'completed',
 ) => {
-  const result = await TransactionModel.findByIdAndUpdate(
+  return await TransactionModel.findByIdAndUpdate(
     id,
     { status },
     { new: true },
   );
-  return result;
 };
 
 export const transactionService = {
