@@ -5,6 +5,7 @@ import userRouter from './app/modules/user/user.route';
 import { globalErrorHandler } from './middlewares/globalErrorHandler';
 import authRouter from './app/modules/auth/auth.route';
 import listingRouter from './app/modules/listings/listings.route';
+import productRouter from './app/modules/items/items.route';
 
 const app: Application = express();
 
@@ -23,8 +24,8 @@ app.use('/api/users', userRouter);
 // Listings
 app.use('/api/listings', listingRouter);
 
-// Products
-// app.use("/api/products", productRouter);
+// Items or Products
+app.use('/api/items', productRouter);
 
 // Order
 // app.use("/api/orders", orderRouter);
