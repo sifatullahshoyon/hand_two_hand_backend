@@ -27,6 +27,50 @@ const createUser = (0, catchAsync_1.default)((req, res) => __awaiter(void 0, voi
         data: result,
     });
 }));
+// Get Single user
+const getSingleUser = (0, catchAsync_1.default)((req, res) => __awaiter(void 0, void 0, void 0, function* () {
+    const id = req.params.id;
+    const result = yield user_service_1.userService.getSingleUserFromDb(id);
+    (0, sendResponse_1.default)(res, {
+        message: 'Single User retrieved successfully',
+        statusCode: http_status_codes_1.StatusCodes.OK,
+        data: result,
+    });
+}));
+// Get update user
+const getUpdateUser = (0, catchAsync_1.default)((req, res) => __awaiter(void 0, void 0, void 0, function* () {
+    const id = req.params.id;
+    const body = req.body;
+    const result = yield user_service_1.userService.userUpdatedFromDb(id, body);
+    (0, sendResponse_1.default)(res, {
+        message: 'User update  successfully',
+        statusCode: http_status_codes_1.StatusCodes.OK,
+        data: result,
+    });
+}));
+// delete user
+const deleteUser = (0, catchAsync_1.default)((req, res) => __awaiter(void 0, void 0, void 0, function* () {
+    const id = req.params.id;
+    yield user_service_1.userService.deleteUserFromDb(id);
+    (0, sendResponse_1.default)(res, {
+        message: 'User update  successfully',
+        statusCode: http_status_codes_1.StatusCodes.OK,
+        data: {},
+    });
+}));
+// Get All user
+const getAllUser = (0, catchAsync_1.default)((req, res) => __awaiter(void 0, void 0, void 0, function* () {
+    const result = yield user_service_1.userService.getAllUserFromDb();
+    (0, sendResponse_1.default)(res, {
+        message: 'All User retrieved successfully',
+        statusCode: http_status_codes_1.StatusCodes.OK,
+        data: result,
+    });
+}));
 exports.userController = {
     createUser,
+    getSingleUser,
+    getUpdateUser,
+    deleteUser,
+    getAllUser,
 };

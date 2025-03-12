@@ -17,6 +17,30 @@ const createUserIntoDb = (payload, role) => __awaiter(void 0, void 0, void 0, fu
     const result = yield user_model_1.UserModel.create(payload);
     return result;
 });
+// Get Single User
+const getSingleUserFromDb = (id) => __awaiter(void 0, void 0, void 0, function* () {
+    const result = yield user_model_1.UserModel.findById(id, { new: true });
+    return result;
+});
+// Get Update single User
+const userUpdatedFromDb = (id, body) => __awaiter(void 0, void 0, void 0, function* () {
+    const result = yield user_model_1.UserModel.findByIdAndUpdate(id, body, { new: true });
+    return result;
+});
+// Delete single User
+const deleteUserFromDb = (id) => __awaiter(void 0, void 0, void 0, function* () {
+    const result = yield user_model_1.UserModel.findByIdAndDelete(id, { new: true });
+    return result;
+});
+// Get All User
+const getAllUserFromDb = () => __awaiter(void 0, void 0, void 0, function* () {
+    const result = yield user_model_1.UserModel.find();
+    return result;
+});
 exports.userService = {
     createUserIntoDb,
+    getSingleUserFromDb,
+    userUpdatedFromDb,
+    deleteUserFromDb,
+    getAllUserFromDb,
 };
