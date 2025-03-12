@@ -1,20 +1,28 @@
-import { NextFunction, Request, Response, Router } from 'express';
+// import { NextFunction, Request, Response, Router } from 'express';
+import { Router } from 'express';
 
 import validateRequest from '../../../middlewares/validateRequest';
 import { productValidation } from './items.validation';
-import { upload } from '../../../helpers/fileUploadHelper';
+// import { upload } from '../../../helpers/fileUploadHelper';
 import { productController } from './items.controller';
 
 const productRouter = Router();
 
 // create product routes:-
+
+// productRouter.post(
+//   '/create-product',
+//   upload.single('file'),
+//   (req: Request, res: Response, next: NextFunction) => {
+//     req.body = JSON.parse(req.body.data);
+//     next();
+//   },
+//   validateRequest(productValidation.productValidationSchema),
+//   productController.createProduct,
+// );
+
 productRouter.post(
   '/create-product',
-  upload.single('file'),
-  (req: Request, res: Response, next: NextFunction) => {
-    req.body = JSON.parse(req.body.data);
-    next();
-  },
   validateRequest(productValidation.productValidationSchema),
   productController.createProduct,
 );

@@ -2,7 +2,7 @@ import sendResponse from '../../../utils/sendResponse';
 import { StatusCodes } from 'http-status-codes';
 import catchAsync from '../../../utils/catchAsync';
 import { Request, Response } from 'express';
-import { sendImageToCloudinary } from '../../../helpers/fileUploadHelper';
+// import { sendImageToCloudinary } from '../../../helpers/fileUploadHelper';
 import { productService } from './items.service';
 
 // create product
@@ -10,17 +10,17 @@ const createProduct = catchAsync(async (req: Request, res: Response) => {
   // const payload = JSON.parse(req.body.data);
   const payload = req.body;
 
-  if (req.file) {
-    const imgName = req.file?.filename ? req.file?.filename : 'product img';
+  // if (req.file) {
+  //   const imgName = req.file?.filename ? req.file?.filename : 'product img';
 
-    const imageName = imgName;
+  //   const imageName = imgName;
 
-    const path = req.file.path;
+  //   const path = req.file.path;
 
-    const { secure_url } = await sendImageToCloudinary(imageName, path);
+  //   const { secure_url } = await sendImageToCloudinary(imageName, path);
 
-    payload.image = secure_url;
-  }
+  //   payload.image = secure_url;
+  // }
 
   // console.log('product controller payload: ', payload);
 
