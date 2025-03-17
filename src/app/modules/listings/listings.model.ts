@@ -22,10 +22,15 @@ const listingSchema = new Schema<IListing>(
     condition: {
       type: String,
       required: [true, 'Condition is required'],
+      enum: ['brandNew', 'gentlyUsed', 'fairCondition', 'goodCondition'],
     },
     images: {
       type: [String],
       default: [],
+      validate: {
+        validator: (val: string[]) => val.every(url => typeof url === 'string'),
+        message: 'Each image URL must be a string',
+      },
     },
     userID: {
       type: Types.ObjectId,
@@ -36,6 +41,16 @@ const listingSchema = new Schema<IListing>(
       type: String,
       enum: ['available', 'sold'],
       default: 'available',
+    },
+    color: {
+      type: String,
+      required: [true, 'Color is required'],
+    },
+    availability: {
+      type: String,
+      required: [true, 'Availability is required'],
+      enum: ['in stock', 'out of stock'],
+      default: 'in stock',
     },
   },
   {

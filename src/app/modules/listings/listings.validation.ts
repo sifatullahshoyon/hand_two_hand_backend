@@ -16,6 +16,11 @@ const listingValidationSchema = z.object({
     })
     .min(10, 'Description must be at least 10 characters long'),
 
+  color: z.string({
+    required_error: 'Color is required',
+    invalid_type_error: 'Color must be a string',
+  }),
+
   price: z
     .number({
       required_error: 'Price is required',
@@ -24,10 +29,12 @@ const listingValidationSchema = z.object({
     .positive('Price must be a positive number')
     .int(),
 
-  condition: z.string({
-    required_error: 'Condition is required',
-    invalid_type_error: 'Condition must be a string',
-  }),
+  condition: z.enum(
+    ['brandNew', 'gentlyUsed', 'fairCondition', 'goodCondition'],
+    {
+      required_error: 'Condition is required',
+    },
+  ),
 
   images: z.array(z.string()).optional(),
 
@@ -37,8 +44,6 @@ const listingValidationSchema = z.object({
       invalid_type_error: 'User ID must be a string',
     })
     .regex(/^[0-9a-fA-F]{24}$/, 'User ID must be a valid MongoDB ObjectId'),
-
-  status: z.enum(['available', 'sold']).optional(),
 });
 
 export const listingValidation = {

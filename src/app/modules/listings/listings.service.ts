@@ -1,3 +1,4 @@
+import QueryBuilder from '../../../builder/queryBuilder';
 import { IListing } from './listings.interface';
 import ListingModel from './listings.model';
 
@@ -9,8 +10,27 @@ const createListingIntoDB = async (
   return newListing;
 };
 
-const getAllListings = async (): Promise<IListing[]> => {
-  return await ListingModel.find();
+const getAllListings = async (
+  query: Record<string, unknown>,
+): Promise<IListing[]> => {
+  const searchableFields = [
+    'title',
+    'price',
+    'category',
+    'condition',
+    'location',
+  ];
+
+  const listings = new QueryBuilder(ListingModel.find(), query)
+    .search(searchableFields)
+    .filter()
+    .sort()
+    .paginate()
+    .select();
+
+  const result = await listings.modelQuery;
+
+  return result;
 };
 
 const getListingById = async (id: string): Promise<IListing | null> => {

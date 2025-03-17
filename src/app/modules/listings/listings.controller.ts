@@ -4,6 +4,7 @@ import catchAsync from '../../../utils/catchAsync';
 import { Request, Response } from 'express';
 import { listingService } from './listings.service';
 
+// create listings
 const createListing = catchAsync(async (req: Request, res: Response) => {
   const listingData = req.body;
 
@@ -16,26 +17,30 @@ const createListing = catchAsync(async (req: Request, res: Response) => {
   });
 });
 
+// get all listings
 const getListings = catchAsync(async (req: Request, res: Response) => {
-  const result = await listingService.getAllListings();
+  const result = await listingService.getAllListings(req.query);
 
   sendResponse(res, {
-    message: 'Listings retrieved successfully',
+    message: 'All Listings retrieved successfully',
     statusCode: StatusCodes.OK,
     data: result,
   });
 });
+
+// get single listing
 
 const getListingById = catchAsync(async (req: Request, res: Response) => {
   const result = await listingService.getListingById(req.params.id);
 
   sendResponse(res, {
-    message: 'Listing retrieved successfully',
+    message: 'Single Listing retrieved successfully',
     statusCode: StatusCodes.OK,
     data: result,
   });
 });
 
+// update listing
 const updateListing = catchAsync(async (req: Request, res: Response) => {
   const result = await listingService.updateListing(req.params.id, req.body);
 
@@ -46,6 +51,7 @@ const updateListing = catchAsync(async (req: Request, res: Response) => {
   });
 });
 
+// delete listing
 const deleteListing = catchAsync(async (req: Request, res: Response) => {
   await listingService.deleteListing(req.params.id);
 
