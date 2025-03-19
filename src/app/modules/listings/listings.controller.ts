@@ -3,10 +3,39 @@ import { StatusCodes } from 'http-status-codes';
 import catchAsync from '../../../utils/catchAsync';
 import { Request, Response } from 'express';
 import { listingService } from './listings.service';
+import mongoose from 'mongoose';
+import { IListing } from './listings.interface';
 
 // create listings
 const createListing = catchAsync(async (req: Request, res: Response) => {
-  const listingData = req.body;
+  const {
+    title,
+    description,
+    price,
+    condition,
+    images,
+    status,
+    color,
+    availability,
+  } = req.body;
+
+  // Authentication middleware থেকে userId পাওয়া যাচ্ছে
+  const userID = new mongoose.Types.ObjectId(
+    req.body.userID,
+  ) as unknown as mongoose.Schema.Types.ObjectId;
+  // ✅ ObjectId-তে রূপান্তর
+
+  const listingData: IListing = {
+    title,
+    description,
+    price,
+    condition,
+    images,
+    userID,
+    status,
+    color,
+    availability,
+  };
 
   const result = await listingService.createListingIntoDB(listingData);
 

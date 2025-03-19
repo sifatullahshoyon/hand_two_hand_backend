@@ -15,9 +15,9 @@ const listingSchema = new Schema<IListing>(
       minlength: [10, 'Description must be at least 10 characters long'],
     },
     price: {
-      type: Number,
+      type: String,
       required: [true, 'Price is required'],
-      min: [0, 'Price must be a positive number'],
+      // min: [0, 'Price must be a positive number'],
     },
     condition: {
       type: String,
@@ -25,12 +25,8 @@ const listingSchema = new Schema<IListing>(
       enum: ['brandNew', 'gentlyUsed', 'fairCondition', 'goodCondition'],
     },
     images: {
-      type: [String],
-      default: [],
-      validate: {
-        validator: (val: string[]) => val.every(url => typeof url === 'string'),
-        message: 'Each image URL must be a string',
-      },
+      type: String,
+      required: [true, 'Image is required'],
     },
     userID: {
       type: Types.ObjectId,
@@ -48,9 +44,9 @@ const listingSchema = new Schema<IListing>(
     },
     availability: {
       type: String,
-      required: [true, 'Availability is required'],
       enum: ['in stock', 'out of stock'],
       default: 'in stock',
+      required: [true, 'Availability is required'],
     },
   },
   {
