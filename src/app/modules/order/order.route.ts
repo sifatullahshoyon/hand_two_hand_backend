@@ -8,9 +8,6 @@ const orderRouter = Router();
 
 orderRouter.get('/verify', auth(USER_ROLE.user), orderController.verifyPayment);
 
-// orderRouter
-// .route('/')
-
 orderRouter.post(
   '/create-order',
   auth(USER_ROLE.user),

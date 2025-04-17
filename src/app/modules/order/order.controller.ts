@@ -19,7 +19,7 @@ const createOrder = catchAsync(async (req, res) => {
 const getOrders = catchAsync(async (req, res) => {
   const order = await orderService.getOrders();
   sendResponse(res, {
-    statusCode: StatusCodes.CREATED,
+    statusCode: StatusCodes.OK,
     message: 'Order retrieved successfully',
     data: order,
   });
@@ -28,7 +28,7 @@ const getOrders = catchAsync(async (req, res) => {
 const verifyPayment = catchAsync(async (req, res) => {
   const order = await orderService.verifyPayment(req.query.order_id as string);
   sendResponse(res, {
-    statusCode: StatusCodes.CREATED,
+    statusCode: StatusCodes.OK,
     message: 'Order verified successfully',
     data: order,
   });
