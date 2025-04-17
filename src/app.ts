@@ -8,12 +8,19 @@ import listingRouter from './app/modules/listings/listings.route';
 import productRouter from './app/modules/items/items.route';
 import transactionRouter from './app/modules/transactions/transactions.route';
 import orderRouter from './app/modules/order/order.route';
+import cookieParser from 'cookie-parser';
 
 const app: Application = express();
 
 // middleware
 app.use(express.json());
-app.use(cors({ origin: 'http://localhost:5173', credentials: true }));
+app.use(cookieParser());
+app.use(
+  cors({
+    origin: ['http://localhost:3000'],
+    credentials: true,
+  }),
+);
 
 // ========================== Application Routes Start ===================
 
@@ -35,7 +42,8 @@ app.use('/api/order', orderRouter);
 // transactions
 app.use('/api/transactions', transactionRouter);
 
-// ========================== Application Routes End ===================
+//* ========================== Application Routes End ===================
+
 app.get('/', (req: Request, res: Response) => {
   res.send({
     status: true,

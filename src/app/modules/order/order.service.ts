@@ -16,8 +16,13 @@ const createOrder = async (
 
   let totalPrice = 0;
   const listings = await Promise.all(
-    products.map(async item => {
+    products?.map(async item => {
       const product = await ListingModel.findById(item.product);
+
+      if (!product) {
+        throw new Error('product Not Found');
+      }
+
       if (product) {
         const price = Number(String(product.price || '0').replace(/,/g, ''));
         const quantity = Number(item.quantity || 0);
@@ -28,9 +33,9 @@ const createOrder = async (
 
         const subtotal = price * quantity;
         totalPrice += subtotal;
-
+        // console.log(product, 'product');
         return {
-          listing: product._id, // Match the schema field name
+          listing: product?._id, // Match the schema field name
           quantity: item.quantity,
         };
       } else {
