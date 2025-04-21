@@ -12,7 +12,10 @@ const createListingIntoDB = async (
 
 const getAllListings = async (
   query: Record<string, unknown>,
-): Promise<IListing[]> => {
+): Promise<{
+  data: IListing[];
+  meta: { total: number; page: number; limit: number; totalPage: number };
+}> => {
   const searchableFields = [
     'title',
     'price',
@@ -21,16 +24,33 @@ const getAllListings = async (
     'location',
   ];
 
-  const listings = new QueryBuilder(ListingModel.find(), query)
+  const queryBuilder = new QueryBuilder(ListingModel.find(), query)
     .search(searchableFields)
     .filter()
     .sort()
     .paginate()
     .select();
 
-  const result = await listings.modelQuery;
+  const listings = await queryBuilder.modelQuery; // Get the listings
+  const total = await ListingModel.countDocuments(queryBuilder.filterQuery); // Use the filterQuery property
 
-  return result;
+  // Ensure `page` and `limit` are valid numbers
+  const page =
+    query.page && !isNaN(Number(query.page)) ? Number(query.page) : 1;
+  const limit =
+    query.limit && !isNaN(Number(query.limit)) ? Number(query.limit) : 10;
+
+  const totalPage = Math.ceil(total / limit); // Calculate total pages
+
+  return {
+    data: listings,
+    meta: {
+      total,
+      page,
+      limit,
+      totalPage, // Include total pages in the metadata
+    },
+  };
 };
 
 const getListingById = async (id: string): Promise<IListing | null> => {

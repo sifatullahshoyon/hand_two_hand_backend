@@ -18,6 +18,8 @@ const login = async (payload: ILoginUser) => {
     '+password',
   );
 
+  console.log('user', user);
+
   if (!user) {
     throw new Error('User not found!');
   }
@@ -44,6 +46,8 @@ const login = async (payload: ILoginUser) => {
     name: user?.name,
     email: user?.email,
     role: user?.role,
+    phoneNumber: user?.phoneNumber,
+    _id: user?._id,
   };
 
   const token = jwt.sign(jwtPayload, config.jwt_secret as string, {

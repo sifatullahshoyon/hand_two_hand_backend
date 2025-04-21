@@ -37,6 +37,8 @@ const createOrder = async (
         return {
           listing: product?._id, // Match the schema field name
           quantity: item.quantity,
+          name: product.title,
+          images: product.images,
         };
       } else {
         throw new Error(`Product with ID ${item.product} not found`);
@@ -44,13 +46,14 @@ const createOrder = async (
     }),
   );
 
+  console.log(listings, 'listings');
+
   let order = await Order.create({
     user: user._id,
     listings,
     totalPrice,
     status: 'Pending',
   });
-  console.log('Created Order:', order);
 
   if (!order) {
     throw new Error('Failed to create order');
@@ -68,11 +71,7 @@ const createOrder = async (
     client_ip,
   };
 
-  console.log('ShurjoPay Payload:', shurjopayPayload); // Log the payload
-
   const payment = await orderUtils.makePaymentAsync(shurjopayPayload);
-
-  console.log('ShurjoPay Response:', payment); // Log the response
 
   if (!payment?.checkout_url) {
     throw new Error('Failed to initiate payment');
@@ -106,9 +105,38 @@ const createOrder = async (
   };
 };
 
+// const getOrders = async () => {
+//   const data = await Order.find();
+//   return data;
+// };
+
 const getOrders = async () => {
-  const data = await Order.find();
-  return data;
+  const orders = await Order.find().lean();
+
+  const populatedOrders = await Promise.all(
+    orders.map(async order => {
+      const listingsWithDetails = await Promise.all(
+        (order.listings || []).map(async listing => {
+          const product = await ListingModel.findById(listing.listing).lean();
+          if (!product) {
+            console.log('Product not found for listing:', listing.listing); // Debugging log
+          }
+          return {
+            ...listing,
+            name: product?.title || 'Unknown',
+            images: product?.images || [],
+          };
+        }),
+      );
+
+      return {
+        ...order,
+        listings: listingsWithDetails,
+      };
+    }),
+  );
+
+  return populatedOrders;
 };
 
 const verifyPayment = async (order_id: string) => {

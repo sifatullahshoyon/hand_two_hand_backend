@@ -2,8 +2,8 @@ import { FilterQuery, Query } from 'mongoose';
 
 class QueryBuilder<T> {
   public modelQuery: Query<T[], T>;
-
   public query: Record<string, unknown>;
+  public filterQuery: FilterQuery<T> = {}; // Add a filterQuery property
 
   constructor(modelQuery: Query<T[], T>, query: Record<string, unknown>) {
     this.modelQuery = modelQuery;
@@ -25,8 +25,9 @@ class QueryBuilder<T> {
   }
 
   filter() {
-    const queryObj = { ...this.query };
+    const queryObj = { ...this.query }; // Copy the query object
 
+    // Exclude fields that are not needed for filtering
     const excludingImportant = [
       'searchTerm',
       'page',
@@ -35,20 +36,17 @@ class QueryBuilder<T> {
       'sortBy',
       'fields',
     ];
-    //  যেসব ফিল্ড আমাদের ফিল্টারিং এর জন্য দরকার নেই সেই সব ফিল্ডকে বাদ দেওয়া হচ্ছে।
-
     excludingImportant.forEach(key => delete queryObj[key]);
 
-    this.modelQuery = this.modelQuery.find(queryObj);
+    this.filterQuery = queryObj as FilterQuery<T>; // Store the filter query
+    this.modelQuery = this.modelQuery.find(this.filterQuery);
 
     return this;
   }
 
   paginate() {
     const page = Number(this?.query?.page) || 1;
-
     const limit = Number(this?.query?.limit) || 10;
-    // skip = (page -1) * limit
     const skipped = (page - 1) * limit;
 
     this.modelQuery = this.modelQuery.skip(skipped).limit(limit);
@@ -61,9 +59,7 @@ class QueryBuilder<T> {
 
     if (this?.query?.sortBy && this?.query?.sortOrder) {
       const sortBy = this?.query?.sortBy;
-
       const sortOrder = this?.query?.sortOrder;
-      // "-price" অথবা "price"
       sortStr = `${sortOrder === 'desc' ? '-' : ''}${sortBy}`;
     }
 
@@ -75,7 +71,6 @@ class QueryBuilder<T> {
   select() {
     let fields = '-__v';
 
-    // jei jei field guloke dekhte cai
     if (this?.query?.fields) {
       fields = (this?.query.fields as string)?.split(',').join(' ');
     }
