@@ -10,4 +10,5 @@ export const transactionSchema = z.object({
   sellerID: objectIdSchema,
   itemID: objectIdSchema,
   status: z.enum(['pending', 'completed']),
+  soldPrice: z.number().positive(),
 });

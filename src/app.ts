@@ -10,6 +10,8 @@ import transactionRouter from './app/modules/transactions/transactions.route';
 import orderRouter from './app/modules/order/order.route';
 import cookieParser from 'cookie-parser';
 
+import salesRouter from './app/modules/sales/sales.route';
+
 const app: Application = express();
 
 // middleware
@@ -41,6 +43,9 @@ app.use('/api/order', orderRouter);
 
 // transactions
 app.use('/api/transactions', transactionRouter);
+
+// sales
+app.use('/api/sales', salesRouter);
 
 //* ========================== Application Routes End ===================
 
