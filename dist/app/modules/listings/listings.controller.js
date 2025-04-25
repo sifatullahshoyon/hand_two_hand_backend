@@ -17,8 +17,24 @@ const sendResponse_1 = __importDefault(require("../../../utils/sendResponse"));
 const http_status_codes_1 = require("http-status-codes");
 const catchAsync_1 = __importDefault(require("../../../utils/catchAsync"));
 const listings_service_1 = require("./listings.service");
+const mongoose_1 = __importDefault(require("mongoose"));
+// create listings
 const createListing = (0, catchAsync_1.default)((req, res) => __awaiter(void 0, void 0, void 0, function* () {
-    const listingData = req.body;
+    const { title, description, price, condition, images, status, color, availability, } = req.body;
+    // Authentication middleware থেকে userId পাওয়া যাচ্ছে
+    const userID = new mongoose_1.default.Types.ObjectId(req.body.userID);
+    // ✅ ObjectId-তে রূপান্তর
+    const listingData = {
+        title,
+        description,
+        price,
+        condition,
+        images,
+        userID,
+        status,
+        color,
+        availability,
+    };
     const result = yield listings_service_1.listingService.createListingIntoDB(listingData);
     (0, sendResponse_1.default)(res, {
         message: 'Listing created successfully',
@@ -26,22 +42,25 @@ const createListing = (0, catchAsync_1.default)((req, res) => __awaiter(void 0, 
         data: result,
     });
 }));
+// get all listings
 const getListings = (0, catchAsync_1.default)((req, res) => __awaiter(void 0, void 0, void 0, function* () {
-    const result = yield listings_service_1.listingService.getAllListings();
+    const result = yield listings_service_1.listingService.getAllListings(req.query);
     (0, sendResponse_1.default)(res, {
-        message: 'Listings retrieved successfully',
+        message: 'All Listings retrieved successfully',
         statusCode: http_status_codes_1.StatusCodes.OK,
         data: result,
     });
 }));
+// get single listing
 const getListingById = (0, catchAsync_1.default)((req, res) => __awaiter(void 0, void 0, void 0, function* () {
     const result = yield listings_service_1.listingService.getListingById(req.params.id);
     (0, sendResponse_1.default)(res, {
-        message: 'Listing retrieved successfully',
+        message: 'Single Listing retrieved successfully',
         statusCode: http_status_codes_1.StatusCodes.OK,
         data: result,
     });
 }));
+// update listing
 const updateListing = (0, catchAsync_1.default)((req, res) => __awaiter(void 0, void 0, void 0, function* () {
     const result = yield listings_service_1.listingService.updateListing(req.params.id, req.body);
     (0, sendResponse_1.default)(res, {
@@ -50,6 +69,7 @@ const updateListing = (0, catchAsync_1.default)((req, res) => __awaiter(void 0, 
         data: result,
     });
 }));
+// delete listing
 const deleteListing = (0, catchAsync_1.default)((req, res) => __awaiter(void 0, void 0, void 0, function* () {
     yield listings_service_1.listingService.deleteListing(req.params.id);
     (0, sendResponse_1.default)(res, {

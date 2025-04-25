@@ -14,17 +14,18 @@ const listingSchema = new mongoose_1.Schema({
         minlength: [10, 'Description must be at least 10 characters long'],
     },
     price: {
-        type: Number,
+        type: String,
         required: [true, 'Price is required'],
-        min: [0, 'Price must be a positive number'],
+        // min: [0, 'Price must be a positive number'],
     },
     condition: {
         type: String,
         required: [true, 'Condition is required'],
+        enum: ['brandNew', 'gentlyUsed', 'fairCondition', 'goodCondition'],
     },
     images: {
-        type: [String],
-        default: [],
+        type: String,
+        required: [true, 'Image is required'],
     },
     userID: {
         type: mongoose_1.Types.ObjectId,
@@ -35,6 +36,16 @@ const listingSchema = new mongoose_1.Schema({
         type: String,
         enum: ['available', 'sold'],
         default: 'available',
+    },
+    color: {
+        type: String,
+        required: [true, 'Color is required'],
+    },
+    availability: {
+        type: String,
+        enum: ['in stock', 'out of stock'],
+        default: 'in stock',
+        required: [true, 'Availability is required'],
     },
 }, {
     timestamps: true,

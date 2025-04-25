@@ -16,7 +16,7 @@ class QueryBuilder<T> {
     if (searchTerm && typeof searchTerm === 'string') {
       this.modelQuery = this.modelQuery.find({
         $or: searchableFields.map(field => ({
-          [field]: { $regex: searchTerm, $options: 'i' },
+          [field]: { $regex: searchTerm, $options: 'i' }, // Case-insensitive search
         })),
       } as FilterQuery<T>);
     }

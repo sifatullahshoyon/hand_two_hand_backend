@@ -11,6 +11,7 @@ const items_validation_1 = require("./items.validation");
 const items_controller_1 = require("./items.controller");
 const productRouter = (0, express_1.Router)();
 // create product routes:-
+//! img upload functionality
 // productRouter.post(
 //   '/create-product',
 //   upload.single('file'),

@@ -11,4 +11,5 @@ exports.transactionSchema = zod_1.z.object({
     sellerID: objectIdSchema,
     itemID: objectIdSchema,
     status: zod_1.z.enum(['pending', 'completed']),
+    soldPrice: zod_1.z.number().positive(),
 });

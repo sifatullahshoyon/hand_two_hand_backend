@@ -10,6 +10,8 @@ const createProduct = catchAsync(async (req: Request, res: Response) => {
   // const payload = JSON.parse(req.body.data);
   const payload = req.body;
 
+  //! img upload functionality
+
   // if (req.file) {
   //   const imgName = req.file?.filename ? req.file?.filename : 'product img';
 

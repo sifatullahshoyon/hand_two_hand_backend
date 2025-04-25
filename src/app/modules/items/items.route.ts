@@ -10,6 +10,7 @@ const productRouter = Router();
 
 // create product routes:-
 
+//! img upload functionality
 // productRouter.post(
 //   '/create-product',
 //   upload.single('file'),

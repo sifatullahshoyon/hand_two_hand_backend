@@ -16,25 +16,30 @@ const listingValidationSchema = zod_1.z.object({
         invalid_type_error: 'Description must be a string',
     })
         .min(10, 'Description must be at least 10 characters long'),
-    price: zod_1.z
-        .number({
-        required_error: 'Price is required',
-        invalid_type_error: 'Price must be a number',
-    })
-        .positive('Price must be a positive number')
-        .int(),
-    condition: zod_1.z.string({
-        required_error: 'Condition is required',
-        invalid_type_error: 'Condition must be a string',
+    color: zod_1.z.string({
+        required_error: 'Color is required',
+        invalid_type_error: 'Color must be a string',
     }),
-    images: zod_1.z.array(zod_1.z.string()).optional(),
+    price: zod_1.z.string({
+        required_error: 'Price is required',
+        invalid_type_error: 'Price must be a string',
+    }),
+    // .positive('Price must be a positive number')
+    // .int(),
+    condition: zod_1.z.enum(['brandNew', 'gentlyUsed', 'fairCondition', 'goodCondition'], {
+        required_error: 'Condition is required',
+    }),
+    images: zod_1.z.string({
+        required_error: 'Image is required',
+        invalid_type_error: 'Image must be a string',
+    }),
     userID: zod_1.z
         .string({
         required_error: 'User ID is required',
         invalid_type_error: 'User ID must be a string',
     })
-        .regex(/^[0-9a-fA-F]{24}$/, 'User ID must be a valid MongoDB ObjectId'),
-    status: zod_1.z.enum(['available', 'sold']).optional(),
+        .regex(/^[0-9a-fA-F]{24}$/, 'User ID must be a valid MongoDB ObjectId')
+        .optional(),
 });
 exports.listingValidation = {
     listingValidationSchema,

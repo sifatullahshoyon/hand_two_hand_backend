@@ -6,9 +6,9 @@ import { IUser } from '../user/user.interface';
 
 const createOrder = catchAsync(async (req, res) => {
   const user: IUser = req.user;
-  console.log('user => ', user);
+
   const order = await orderService.createOrder(user, req.body, req.ip!);
-  console.log('order', order);
+
   sendResponse(res, {
     statusCode: StatusCodes.CREATED,
     message: 'Order placed successfully',
@@ -18,6 +18,7 @@ const createOrder = catchAsync(async (req, res) => {
 
 const getOrders = catchAsync(async (req, res) => {
   const order = await orderService.getOrders();
+
   sendResponse(res, {
     statusCode: StatusCodes.OK,
     message: 'Order retrieved successfully',
@@ -27,6 +28,7 @@ const getOrders = catchAsync(async (req, res) => {
 
 const verifyPayment = catchAsync(async (req, res) => {
   const order = await orderService.verifyPayment(req.query.order_id as string);
+
   sendResponse(res, {
     statusCode: StatusCodes.OK,
     message: 'Order verified successfully',

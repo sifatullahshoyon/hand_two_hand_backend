@@ -14,9 +14,7 @@ const storage = multer_1.default.diskStorage({
         cb(null, './uploads');
     },
     filename: (req, file, cb) => {
-        // console.log('filename', file);
         const fileExt = path_1.default.extname(file.originalname);
-        // console.log('fileExt', fileExt);
         const fileName = file.originalname
             .replace(fileExt, '')
             .toLowerCase()
@@ -24,7 +22,6 @@ const storage = multer_1.default.diskStorage({
             .join('-') +
             '-' +
             Date.now();
-        // console.log('fileName 25:-', fileName, fileExt);
         cb(null, fileName + fileExt);
     },
 });

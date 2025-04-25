@@ -13,14 +13,42 @@ var __importDefault = (this && this.__importDefault) || function (mod) {
 };
 Object.defineProperty(exports, "__esModule", { value: true });
 exports.listingService = void 0;
+const queryBuilder_1 = __importDefault(require("../../../builder/queryBuilder"));
 const listings_model_1 = __importDefault(require("./listings.model"));
 const createListingIntoDB = (listingData) => __awaiter(void 0, void 0, void 0, function* () {
     const newListing = new listings_model_1.default(listingData);
     yield newListing.save();
     return newListing;
 });
-const getAllListings = () => __awaiter(void 0, void 0, void 0, function* () {
-    return yield listings_model_1.default.find();
+const getAllListings = (query) => __awaiter(void 0, void 0, void 0, function* () {
+    const searchableFields = [
+        'title',
+        'price',
+        'category',
+        'condition',
+        'location',
+    ];
+    const queryBuilder = new queryBuilder_1.default(listings_model_1.default.find(), query)
+        .search(searchableFields)
+        .filter()
+        .sort()
+        .paginate()
+        .select();
+    const listings = yield queryBuilder.modelQuery; // Get the listings
+    const total = yield listings_model_1.default.countDocuments(queryBuilder.filterQuery); // Use the filterQuery property
+    // Ensure `page` and `limit` are valid numbers
+    const page = query.page && !isNaN(Number(query.page)) ? Number(query.page) : 1;
+    const limit = query.limit && !isNaN(Number(query.limit)) ? Number(query.limit) : 20;
+    const totalPage = Math.ceil(total / limit); // Calculate total pages
+    return {
+        data: listings,
+        meta: {
+            total,
+            page,
+            limit,
+            totalPage, // Include total pages in the metadata
+        },
+    };
 });
 const getListingById = (id) => __awaiter(void 0, void 0, void 0, function* () {
     return yield listings_model_1.default.findById(id);

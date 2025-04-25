@@ -41,8 +41,11 @@ const login = (payload) => __awaiter(void 0, void 0, void 0, function* () {
     }
     //create token and sent to the  client
     const jwtPayload = {
+        name: user === null || user === void 0 ? void 0 : user.name,
         email: user === null || user === void 0 ? void 0 : user.email,
         role: user === null || user === void 0 ? void 0 : user.role,
+        phoneNumber: user === null || user === void 0 ? void 0 : user.phoneNumber,
+        _id: user === null || user === void 0 ? void 0 : user._id,
     };
     const token = jsonwebtoken_1.default.sign(jwtPayload, config_1.default.jwt_secret, {
         expiresIn: '7d',

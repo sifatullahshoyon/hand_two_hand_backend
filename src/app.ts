@@ -24,7 +24,7 @@ app.use(
   }),
 );
 
-// ========================== Application Routes Start ===================
+//* ========================== Application Routes Start ===================
 
 // Auth
 app.use('/api/auth', authRouter);

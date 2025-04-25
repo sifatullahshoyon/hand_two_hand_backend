@@ -38,7 +38,7 @@ const getAllListings = async (
   const page =
     query.page && !isNaN(Number(query.page)) ? Number(query.page) : 1;
   const limit =
-    query.limit && !isNaN(Number(query.limit)) ? Number(query.limit) : 10;
+    query.limit && !isNaN(Number(query.limit)) ? Number(query.limit) : 20;
 
   const totalPage = Math.ceil(total / limit); // Calculate total pages
 

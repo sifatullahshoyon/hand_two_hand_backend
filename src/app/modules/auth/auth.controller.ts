@@ -9,7 +9,6 @@ const register = catchAsync(async (req: Request, res: Response) => {
   const payload = req.body;
 
   const result = await authService.register(payload);
-  // console.log(result);
 
   sendResponse(res, {
     message: 'User is registered successfully',
@@ -23,7 +22,6 @@ const login = catchAsync(async (req: Request, res: Response) => {
   const payload = req.body;
 
   const result = await authService.login(payload);
-  // console.log('login result', result);
 
   sendResponse(res, {
     message: 'User is logged in successfully',

@@ -12,33 +12,34 @@ var __importDefault = (this && this.__importDefault) || function (mod) {
     return (mod && mod.__esModule) ? mod : { "default": mod };
 };
 Object.defineProperty(exports, "__esModule", { value: true });
-exports.authController = void 0;
+exports.orderController = void 0;
+const http_status_codes_1 = require("http-status-codes");
 const catchAsync_1 = __importDefault(require("../../../utils/catchAsync"));
 const sendResponse_1 = __importDefault(require("../../../utils/sendResponse"));
-const http_status_codes_1 = require("http-status-codes");
-const auth_service_1 = require("./auth.service");
-// register
-const register = (0, catchAsync_1.default)((req, res) => __awaiter(void 0, void 0, void 0, function* () {
-    const payload = req.body;
-    const result = yield auth_service_1.authService.register(payload);
+const order_service_1 = require("./order.service");
+const createOrder = (0, catchAsync_1.default)((req, res) => __awaiter(void 0, void 0, void 0, function* () {
+    const user = req.user;
+    const order = yield order_service_1.orderService.createOrder(user, req.body, req.ip);
     (0, sendResponse_1.default)(res, {
-        message: 'User is registered successfully',
         statusCode: http_status_codes_1.StatusCodes.CREATED,
-        data: result,
+        message: 'Order placed successfully',
+        data: order,
     });
 }));
-// login
-const login = (0, catchAsync_1.default)((req, res) => __awaiter(void 0, void 0, void 0, function* () {
-    const payload = req.body;
-    const result = yield auth_service_1.authService.login(payload);
+const getOrders = (0, catchAsync_1.default)((req, res) => __awaiter(void 0, void 0, void 0, function* () {
+    const order = yield order_service_1.orderService.getOrders();
     (0, sendResponse_1.default)(res, {
-        message: 'User is logged in successfully',
-        statusCode: http_status_codes_1.StatusCodes.ACCEPTED,
-        token: result === null || result === void 0 ? void 0 : result.token,
-        data: result === null || result === void 0 ? void 0 : result.verifiedUser,
+        statusCode: http_status_codes_1.StatusCodes.OK,
+        message: 'Order retrieved successfully',
+        data: order,
     });
 }));
-exports.authController = {
-    register,
-    login,
-};
+const verifyPayment = (0, catchAsync_1.default)((req, res) => __awaiter(void 0, void 0, void 0, function* () {
+    const order = yield order_service_1.orderService.verifyPayment(req.query.order_id);
+    (0, sendResponse_1.default)(res, {
+        statusCode: http_status_codes_1.StatusCodes.OK,
+        message: 'Order verified successfully',
+        data: order,
+    });
+}));
+exports.orderController = { createOrder, verifyPayment, getOrders };

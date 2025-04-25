@@ -33,7 +33,7 @@ const createOrder = async (
 
         const subtotal = price * quantity;
         totalPrice += subtotal;
-        // console.log(product, 'product');
+
         return {
           listing: product?._id, // Match the schema field name
           quantity: item.quantity,
@@ -45,8 +45,6 @@ const createOrder = async (
       }
     }),
   );
-
-  console.log(listings, 'listings');
 
   let order = await Order.create({
     user: user._id,

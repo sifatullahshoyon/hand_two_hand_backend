@@ -12,11 +12,18 @@ const auth_route_1 = __importDefault(require("./app/modules/auth/auth.route"));
 const listings_route_1 = __importDefault(require("./app/modules/listings/listings.route"));
 const items_route_1 = __importDefault(require("./app/modules/items/items.route"));
 const transactions_route_1 = __importDefault(require("./app/modules/transactions/transactions.route"));
+const order_route_1 = __importDefault(require("./app/modules/order/order.route"));
+const cookie_parser_1 = __importDefault(require("cookie-parser"));
+const sales_route_1 = __importDefault(require("./app/modules/sales/sales.route"));
 const app = (0, express_1.default)();
 // middleware
 app.use(express_1.default.json());
-app.use((0, cors_1.default)({ origin: 'http://localhost:5173', credentials: true }));
-// ========================== Application Routes Start ===================
+app.use((0, cookie_parser_1.default)());
+app.use((0, cors_1.default)({
+    origin: ['http://localhost:3000'],
+    credentials: true,
+}));
+//* ========================== Application Routes Start ===================
 // Auth
 app.use('/api/auth', auth_route_1.default);
 // User
@@ -25,9 +32,13 @@ app.use('/api/users', user_route_1.default);
 app.use('/api/listings', listings_route_1.default);
 // Items or Products
 app.use('/api/items', items_route_1.default);
+// Order
+app.use('/api/order', order_route_1.default);
 // transactions
 app.use('/api/transactions', transactions_route_1.default);
-// ========================== Application Routes End ===================
+// sales
+app.use('/api/sales', sales_route_1.default);
+//* ========================== Application Routes End ===================
 app.get('/', (req, res) => {
     res.send({
         status: true,

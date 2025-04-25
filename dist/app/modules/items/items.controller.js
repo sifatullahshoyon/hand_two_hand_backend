@@ -22,6 +22,7 @@ const items_service_1 = require("./items.service");
 const createProduct = (0, catchAsync_1.default)((req, res) => __awaiter(void 0, void 0, void 0, function* () {
     // const payload = JSON.parse(req.body.data);
     const payload = req.body;
+    //! img upload functionality
     // if (req.file) {
     //   const imgName = req.file?.filename ? req.file?.filename : 'product img';
     //   const imageName = imgName;

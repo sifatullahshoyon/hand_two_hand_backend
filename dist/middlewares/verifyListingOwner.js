@@ -16,14 +16,14 @@ const http_status_codes_1 = require("http-status-codes");
 const listings_model_1 = __importDefault(require("../app/modules/listings/listings.model"));
 const catchAsync_1 = __importDefault(require("../utils/catchAsync"));
 const verifyListingOwner = (0, catchAsync_1.default)((req, res, next) => __awaiter(void 0, void 0, void 0, function* () {
-    var _a, _b;
+    var _a, _b, _c;
     const listing = yield listings_model_1.default.findById(req.params.id);
     if (!listing) {
         res.status(http_status_codes_1.StatusCodes.NOT_FOUND).json({ message: 'Listing not found' });
         return;
     }
     if (((_a = req.user) === null || _a === void 0 ? void 0 : _a.role) !== 'admin' &&
-        listing.userID.toString() !== ((_b = req.user) === null || _b === void 0 ? void 0 : _b.id)) {
+        ((_b = listing.userID) === null || _b === void 0 ? void 0 : _b.toString()) !== ((_c = req.user) === null || _c === void 0 ? void 0 : _c.id)) {
         res
             .status(http_status_codes_1.StatusCodes.FORBIDDEN)
             .json({ message: 'You do not have permission to modify this listing' });

@@ -3,14 +3,28 @@ import { ITransaction } from './transaction.interface';
 import TransactionModel from './transaction.model';
 
 // Create a new transaction
+
+// const createTransactionIntoDb = async (
+//   payload: ITransaction,
+// ): Promise<ITransaction> => {
+//   const transactionData = {
+//     ...payload,
+//     buyerID: new mongoose.Types.ObjectId(payload.buyerID),
+//     sellerID: new mongoose.Types.ObjectId(payload.sellerID),
+//     itemID: new mongoose.Types.ObjectId(payload.itemID),
+//   };
+
+//   return await TransactionModel.create(transactionData);
+// };
+
 const createTransactionIntoDb = async (
   payload: ITransaction,
 ): Promise<ITransaction> => {
   const transactionData = {
     ...payload,
-    buyerID: new mongoose.Types.ObjectId(payload.buyerID),
-    sellerID: new mongoose.Types.ObjectId(payload.sellerID),
-    itemID: new mongoose.Types.ObjectId(payload.itemID),
+    buyerID: payload.buyerID,
+    sellerID: payload.sellerID,
+    itemID: payload.itemID,
   };
 
   return await TransactionModel.create(transactionData);

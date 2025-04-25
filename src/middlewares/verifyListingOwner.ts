@@ -14,7 +14,7 @@ const verifyListingOwner = catchAsync(
 
     if (
       req.user?.role !== 'admin' &&
-      listing.userID.toString() !== req.user?.id
+      listing.userID?.toString() !== req.user?.id
     ) {
       res
         .status(StatusCodes.FORBIDDEN)

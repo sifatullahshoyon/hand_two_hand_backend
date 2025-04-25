@@ -16,8 +16,19 @@ exports.transactionService = void 0;
 const mongoose_1 = __importDefault(require("mongoose"));
 const transaction_model_1 = __importDefault(require("./transaction.model"));
 // Create a new transaction
+// const createTransactionIntoDb = async (
+//   payload: ITransaction,
+// ): Promise<ITransaction> => {
+//   const transactionData = {
+//     ...payload,
+//     buyerID: new mongoose.Types.ObjectId(payload.buyerID),
+//     sellerID: new mongoose.Types.ObjectId(payload.sellerID),
+//     itemID: new mongoose.Types.ObjectId(payload.itemID),
+//   };
+//   return await TransactionModel.create(transactionData);
+// };
 const createTransactionIntoDb = (payload) => __awaiter(void 0, void 0, void 0, function* () {
-    const transactionData = Object.assign(Object.assign({}, payload), { buyerID: new mongoose_1.default.Types.ObjectId(payload.buyerID), sellerID: new mongoose_1.default.Types.ObjectId(payload.sellerID), itemID: new mongoose_1.default.Types.ObjectId(payload.itemID) });
+    const transactionData = Object.assign(Object.assign({}, payload), { buyerID: payload.buyerID, sellerID: payload.sellerID, itemID: payload.itemID });
     return yield transaction_model_1.default.create(transactionData);
 });
 // Get all purchases for a user
