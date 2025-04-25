@@ -22,7 +22,7 @@ app.use(
     origin: [
       'https://hand-two-hand-backend.vercel.app',
       'http://localhost:3000',
-      'https://hand-to-hand-client.vercel.app',
+      'https://hand-to-hand-frontend.vercel.app',
     ],
     credentials: true,
   }),
