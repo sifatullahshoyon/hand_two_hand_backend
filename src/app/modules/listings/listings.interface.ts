@@ -10,4 +10,12 @@ export interface IListing {
   status: 'available' | 'sold';
   color: string;
   availability: 'in stock' | 'out of stock';
+  category:
+    | 'mobiles'
+    | 'electronics'
+    | 'vehicles'
+    | 'homeAndLiving'
+    | 'womensFashion'
+    | 'MensFashion'
+    | 'hobbiesAndSports';
 }

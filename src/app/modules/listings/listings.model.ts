@@ -48,6 +48,19 @@ const listingSchema = new Schema<IListing>(
       default: 'in stock',
       required: [true, 'Availability is required'],
     },
+    category: {
+      type: String,
+      enum: [
+        'mobiles',
+        'electronics',
+        'vehicles',
+        'homeAndLiving',
+        'womensFashion',
+        'MensFashion',
+        'hobbiesAndSports',
+      ],
+      required: [true, 'Category is required'],
+    },
   },
   {
     timestamps: true,

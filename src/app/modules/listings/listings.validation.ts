@@ -34,6 +34,20 @@ const listingValidationSchema = z.object({
       required_error: 'Condition is required',
     },
   ),
+  category: z.enum(
+    [
+      'mobiles',
+      'electronics',
+      'vehicles',
+      'homeAndLiving',
+      'womensFashion',
+      'MensFashion',
+      'hobbiesAndSports',
+    ],
+    {
+      required_error: 'Category is required',
+    },
+  ),
 
   images: z.string({
     required_error: 'Image is required',

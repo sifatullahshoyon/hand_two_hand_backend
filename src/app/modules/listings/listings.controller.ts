@@ -17,6 +17,7 @@ const createListing = catchAsync(async (req: Request, res: Response) => {
     status,
     color,
     availability,
+    category,
   } = req.body;
 
   // Authentication middleware থেকে userId পাওয়া যাচ্ছে
@@ -35,6 +36,7 @@ const createListing = catchAsync(async (req: Request, res: Response) => {
     status,
     color,
     availability,
+    category,
   };
 
   const result = await listingService.createListingIntoDB(listingData);
