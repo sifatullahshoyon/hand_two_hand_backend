@@ -20,7 +20,7 @@ const listings_service_1 = require("./listings.service");
 const mongoose_1 = __importDefault(require("mongoose"));
 // create listings
 const createListing = (0, catchAsync_1.default)((req, res) => __awaiter(void 0, void 0, void 0, function* () {
-    const { title, description, price, condition, images, status, color, availability, } = req.body;
+    const { title, description, price, condition, images, status, color, availability, category, } = req.body;
     // Authentication middleware থেকে userId পাওয়া যাচ্ছে
     const userID = new mongoose_1.default.Types.ObjectId(req.body.userID);
     // ✅ ObjectId-তে রূপান্তর
@@ -34,6 +34,7 @@ const createListing = (0, catchAsync_1.default)((req, res) => __awaiter(void 0, 
         status,
         color,
         availability,
+        category,
     };
     const result = yield listings_service_1.listingService.createListingIntoDB(listingData);
     (0, sendResponse_1.default)(res, {

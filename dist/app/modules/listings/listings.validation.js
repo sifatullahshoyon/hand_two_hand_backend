@@ -29,6 +29,17 @@ const listingValidationSchema = zod_1.z.object({
     condition: zod_1.z.enum(['brandNew', 'gentlyUsed', 'fairCondition', 'goodCondition'], {
         required_error: 'Condition is required',
     }),
+    category: zod_1.z.enum([
+        'mobiles',
+        'electronics',
+        'vehicles',
+        'homeAndLiving',
+        'womensFashion',
+        'MensFashion',
+        'hobbiesAndSports',
+    ], {
+        required_error: 'Category is required',
+    }),
     images: zod_1.z.string({
         required_error: 'Image is required',
         invalid_type_error: 'Image must be a string',
